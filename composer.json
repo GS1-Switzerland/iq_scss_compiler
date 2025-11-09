@@ -18,8 +18,8 @@
     }
   },
   "require": {
-    "scssphp/scssphp": "^1.10",
-    "php": "^8.1",
-    "drupal/core": "^9.5 || ^10 || ^11"
+    "scssphp/scssphp": "^2.0",
+    "php": "^8.3",
+    "drupal/core": "^10 || ^11"
   }
 }
