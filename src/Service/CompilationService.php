@@ -69,7 +69,6 @@ class CompilationService {
     $this->iterator = new \AppendIterator();
     $this->compiler = new Compiler();
     $this->compiler->setOutputStyle(OutputStyle::COMPRESSED);
-    $this->compiler->setSilenceDeprecations([Deprecation::mixedDecls]);
 
     // Reset state to be sure.
     if ($this->isPaused() && filemtime(static::WATCH_FILE) - 300 > time()) {
