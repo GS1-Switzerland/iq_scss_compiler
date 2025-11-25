@@ -4,6 +4,7 @@ namespace Drupal\iq_scss_compiler\Service;
 
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Deprecation;
 use ScssPhp\ScssPhp\OutputStyle;
 
 /**
@@ -68,6 +69,7 @@ class CompilationService {
     $this->iterator = new \AppendIterator();
     $this->compiler = new Compiler();
     $this->compiler->setOutputStyle(OutputStyle::COMPRESSED);
+    $this->compiler->setSilenceDeprecations([Deprecation::mixedDecls]);
 
     // Reset state to be sure.
     if ($this->isPaused() && filemtime(static::WATCH_FILE) - 300 > time()) {
@@ -248,7 +250,7 @@ class CompilationService {
       if ($scssFile->isFile() && $scssFile->getExtension() == 'scss' && !str_starts_with((string) $scssFile->getFilename(), '_')) {
         $sourceFile = $scssFile->getPath() . '/' . $scssFile->getFilename();
         try {
-          $css = $this->compiler->compileString('@import "' . $sourceFile . '";')->getCss();
+            $css = $this->compiler->compileFile($sourceFile)->getCss();
         }
         catch (\Exception $e) {
           if ($continueOnError) {
